@@ -1,860 +1,236 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>技术笔记分享 - 技术笔记分享</title><meta name="keywords" content="技术笔记分享"><meta name="author" content="技术笔记分享"><meta name="copyright" content="技术笔记分享"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="技术笔记分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="技术笔记分享">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="技术笔记分享">
+<meta property="og:description" content="技术笔记分享">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:author" content="技术笔记分享">
+<meta property="article:tag" content="技术笔记分享">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
 
-
-<html lang="zh-CN">
-
-
-<head>
-  <meta charset="utf-8" />
-   
-  <meta name="keywords" content="技术笔记分享" />
-   
-  <meta name="description" content="技术笔记分享" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-     技术笔记分享
-  </title>
-  <meta name="generator" content="hexo-theme-ayer">
-  
-  <link rel="shortcut icon" href="/favicon.ico" />
-  
-  
-<link rel="stylesheet" href="/dist/main.css">
-
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
-
-  
-<link rel="stylesheet" href="/css/custom.css">
-
-  
-  
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-  
-  
-
-  
-
-<link rel="alternate" href="/atom.xml" title="技术笔记分享" type="application/atom+xml">
-</head>
-
-</html>
-
-<body>
-  <div id="app">
-    
-      
-    <main class="content on">
-      
-
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
-
-
-<!-- Subtitle -->
-
-  <script>
-    try {
-      var typed = new Typed("#subtitle", {
-        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
-        startDelay: 0,
-        typeSpeed: 200,
-        loop: true,
-        backSpeed: 100,
-        showCursor: true
-      });
-    } catch (err) {
-      console.log(err)
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
     }
-  </script>
-  
-<div id="main">
-  <section class="outer">
-  
-  
+    localStorage.setItem(key, JSON.stringify(item))
+  },
 
-<div class="notice" style="margin-top:50px">
-    <i class="ri-heart-fill"></i>
-    <div class="notice-content" id="broad"></div>
-</div>
-<script type="text/javascript">
-    fetch('https://v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("broad").innerHTML = data.hitokoto;
-        })
-        .catch(console.error)
-</script>
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
 
-<style>
-    .notice {
-        padding: 20px;
-        border: 1px dashed #e6e6e6;
-        color: #969696;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        background: #fbfbfb50;
-        border-radius: 10px;
+    if (!itemStr) {
+      return undefined
     }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
 
-    .notice i {
-        float: left;
-        color: #999;
-        font-size: 16px;
-        padding-right: 10px;
-        vertical-align: middle;
-        margin-top: -2px;
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
     }
-
-    .notice-content {
-        display: initial;
-        vertical-align: middle;
-    }
-</style>
-  
-  <article class="articles">
-    
-    
-    
-    
-    <article
-  id="post-xhs-8"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-8/"
-    >小红书KOL速成指南(9):超详细小红书企业号完整运营方案</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-8/" class="article-date">
-  <time datetime="2020-10-27T09:24:44.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E4%BC%81%E4%B8%9A%E5%8F%B7/">企业号</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BC%81%E4%B8%9A%E5%8F%B7/" rel="tag">企业号</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-7"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-7/"
-    >小红书KOL速成指南(8)：史上最强的小红书品牌投放方案</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-7/" class="article-date">
-  <time datetime="2020-10-27T09:24:40.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%93%81%E7%89%8C/">品牌</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%93%81%E7%89%8C/" rel="tag">品牌</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-6"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-6/"
-    >小红书KOL速成指南(7)：小红书运营工具大合集（附教程）</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-6/" class="article-date">
-  <time datetime="2020-10-27T09:24:35.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/">工具大合集</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/" rel="tag">工具大合集</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-5"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-5/"
-    >小红书KOL速成指南(6)：账号定位的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-5/" class="article-date">
-  <time datetime="2020-10-27T09:24:31.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%B4%A6%E5%8F%B7/">账号</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B4%A6%E5%8F%B7/" rel="tag">账号</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-4"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-4/"
-    >小红书KOL速成指南(5)：笔记发布时间的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-4/" class="article-date">
-  <time datetime="2020-10-27T09:24:28.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/">发布时间</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/" rel="tag">发布时间</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-3"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-3/"
-    >小红书KOL速成指南(4):小红书运营思维的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-3/" class="article-date">
-  <time datetime="2020-10-27T09:24:24.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%BF%90%E8%90%A5/">运营</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%90%E8%90%A5/" rel="tag">运营</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-2"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-2/"
-    >小红书KOL速成指南(3):笔记排名与权重算法的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-2/" class="article-date">
-  <time datetime="2020-10-27T09:24:19.000Z" itemprop="datePublished">2020-10-27</time>
-</a>    
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs-1"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs-1/"
-    >小红书KOL速成指南(2)：笔记限流的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs-1/" class="article-date">
-  <time datetime="2020-10-27T09:24:13.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E9%99%90%E6%B5%81/">限流</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%99%90%E6%B5%81/" rel="tag">限流</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-    <article
-  id="post-xhs"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/10/27/xhs/"
-    >小红书KOL速成指南(1)：爆款笔记的秘密</a> 
-</h2>
- 
-
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/10/27/xhs/" class="article-date">
-  <time datetime="2020-10-27T08:26:50.000Z" itemprop="datePublished">2020-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a> / <a class="article-category-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E7%88%86%E6%AC%BE/">爆款</a>
-  </div>
-   
-    </div>
-       
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%86%E6%AC%BE/" rel="tag">爆款</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-   
-</article>
-
-    
-  </article>
-  
-
-  
-</section>
-</div>
-
-      <footer class="footer">
-  <div class="outer">
-    <ul>
-      <li>
-        Copyrights &copy;
-        2015-2020
-        <i class="ri-heart-fill heart_icon"></i> 技术笔记分享
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        
-        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
-        <span class="division">|</span>
-        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
-        
-      </li>
-    </ul>
-    <ul>
-      <li>
-        
-        
-        <span>
-  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></s>
-  <span class="division">|</span>
-  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
-</span>
-        
-      </li>
-    </ul>
-    <ul>
-      
-        <li>
-          <a href="http://beian.miit.gov.cn/" target="_black" rel="nofollow">湘ICP备19000254号-1</a>
-        </li>
-        
-    </ul>
-    <ul>
-      
-    </ul>
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
-        
-      </li>
-    </ul>
-  </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-      </div>
-    </main>
-    <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/images/ayer-side.svg" alt="技术笔记分享"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">主页</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">归档</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/categories">分类</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/tags">标签</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="搜索">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
-  <div class="reward-box">
-    
-    
-  </div>
-</div>
-    
-<script src="/js/jquery-2.0.3.min.js"></script>
-
-
-<script src="/js/lazyload.min.js"></script>
-
-<!-- Tocbot -->
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-
-<script src="/dist/main.js"></script>
-
-<!-- ImageViewer -->
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
-
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
-
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
-</script>
-
-<!-- MathJax -->
-
-<!-- Katex -->
-
-<!-- busuanzi  -->
-
-
-<script src="/js/busuanzi-2.3.pure.min.js"></script>
-
-
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-
-<link rel="stylesheet" href="/css/clipboard.css">
-
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script>
-  function wait(callback, seconds) {
-    var timelag = null;
-    timelag = window.setTimeout(callback, seconds);
+    return item.value
   }
-  !function (e, t, a) {
-    var initCopyCode = function(){
-      var copyHtml = '';
-      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
-      copyHtml += '</button>';
-      $(".highlight .code pre").before(copyHtml);
-      $(".article pre code").before(copyHtml);
-      var clipboard = new ClipboardJS('.btn-copy', {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
-        }
-      });
-      clipboard.on('success', function(e) {
-        let $btn = $(e.trigger);
-        $btn.addClass('copied');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-checkbox-circle-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPIED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-checkbox-circle-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-      clipboard.on('error', function(e) {
-        e.clearSelection();
-        let $btn = $(e.trigger);
-        $btn.addClass('copy-failed');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-time-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPY FAILED';
-        
-        wait(function () { // 等待两秒钟后恢复
-          $icon.removeClass('ri-time-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2020-12-06 17:24:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
     }
-    initCopyCode();
-  }(window, document);
-</script>
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="技术笔记分享" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-align-justify"></i><span> 文章目录</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/photo/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-link"></i><span> 友链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page" href="/skm/"><i class="fa-fw fa fa-archive"></i><span> 万能收款码</span></a></li><li><a class="site-page" href="/toqz/"><i class="fa-fw fa fa-bullseye"></i><span> 圈子联盟</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-folder-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">技术笔记分享</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-align-justify"></i><span> 文章目录</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/photo/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-link"></i><span> 友链</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page" href="/skm/"><i class="fa-fw fa fa-archive"></i><span> 万能收款码</span></a></li><li><a class="site-page" href="/toqz/"><i class="fa-fw fa fa-bullseye"></i><span> 圈子联盟</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-folder-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">技术笔记分享</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/27/xhs-8/" title="小红书KOL速成指南(9):超详细小红书企业号完整运营方案">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(9):超详细小红书企业号完整运营方案"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-8/" title="小红书KOL速成指南(9):超详细小红书企业号完整运营方案">小红书KOL速成指南(9):超详细小红书企业号完整运营方案</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:44.000Z" title="发表于 2020-10-27 17:24:44">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E4%BC%81%E4%B8%9A%E5%8F%B7/">企业号</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E4%BC%81%E4%B8%9A%E5%8F%B7/">企业号</a></span></div><div class="content">小红书KOL速成指南(9):超详细小红书企业号完整运营方案这次要写的内容是大家期待已久的小红书企业号运营。
+本文将为大家讲清楚小红书企业号的意义，怎么运营，功能使用方法，甚至还包含申请攻略，全文共分为以下7个部分，可按顺序阅读：
+
+小红书企业号的意义
+小红书企业号功能详解
+小红书企业号申请攻略
+小红书企业号如何运营？
+小红书企业号社区规范
+小红书企业号常见问题
+小红书企业号的未来
+
+01
+ 企业号的意义
+首先我们得明确一下概念，小红书企业号的前身是小红书品牌号，而小红书品牌号的前身是小红书品牌账号，当然你说是功能升级也对，品牌升级也对，其实这三个就是一个东西。
+所以，小红书品牌账号=小红书品牌号=小红书企业号。
+目前平台已经全面叫企业号了，那我们也都以此为标准吧，统一叫企业号，避免被混淆概念。
+为了使我们更好地理解小红书的企业号的运营，知道小红书做企业号的初心很重要，这决定了我们将以什么样的“方式”来运营小红书。
+当然，太久远的信息对我们没有参考价值，说说上一次的小红书品牌号登场吧。
+
+（品牌号上线时的官方示例）
+
+“品牌号”将更好地连接消费者和品牌，帮助品牌在小红书完成一站式闭环营销 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/27/xhs-7/" title="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-7/" title="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案">小红书KOL速成指南(8)：史上最强的小红书品牌投放方案</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:40.000Z" title="发表于 2020-10-27 17:24:40">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%93%81%E7%89%8C/">品牌</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E5%93%81%E7%89%8C/">品牌</a></span></div><div class="content">小红书KOL速成指南(8)：史上最强的小红书品牌投放方案这是《小红书KOL速成指南》系列第八篇，之前关于小红书账号运营的内容写了很多，但很少站在商家的角度去做广告投放，所以很多品牌推广负责人来找我问：
+我发的笔记都没什么人看，哪有转化？
+KOL粉丝不少，发了笔记怎么没效果，是不是现在kol都是水？
+一天内我投了那么多篇种草笔记，按道理不是应该很火吗？为什么效果不好？
+现在终于有空来给大家解答问题，写写品牌在小红书该怎么做广告投放。（品牌投放都来了，品牌号运营还会远吗？）
+这篇文章很适合品牌方和小红书KOL去阅读，前者能学习到投放知识，后者也能收获该怎么为甲方制造更好的广告的效果。
+一点不开玩笑的说，这可能是讲小红书品牌投放最全的文章了，当然，这也可能是一篇写出来可能会挨打的文章，毕竟“小型”的中介MCN工作可能因此而失去意义。
+其实这篇文章我一直都很纠结到底要不要写，因为众所周知，品牌投放是小红书整个平台的最重要的收入来源，无论是对达人还是平台亦或者我们这种做达人孵化和广告投放的公司来说都是如此，这是个很大的问题，商家自己做了投放，小红书平台和达人可能没什么影响，但对“小型”的中介MC ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/27/xhs-6/" title="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-6/" title="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）">小红书KOL速成指南(7)：小红书运营工具大合集（附教程）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:35.000Z" title="发表于 2020-10-27 17:24:35">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/">工具大合集</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/">工具大合集</a></span></div><div class="content">小红书KOL速成指南(7)：小红书运营工具大合集（附教程）《小红书KOL速成指南》系列从今年开始更新到现在，已经到了第七篇，内容从小红书账号定位到小红书权重拆解，再到小红书笔记的爆款打造，最后再到小红书的运营思维，不知不觉我们已经将小红书的大部分运营套路学会了，这些经验可以使各位达人成为一个在路上的KOL，但仍然会有小伙伴问我，套路我都懂，但是小红书的图片怎么处理？视频怎么剪辑？
+而这也是我们这篇文章的主题，工欲善其事必先利其器，所以我们这篇就分享一下“可能是”史上最全的小红书运营工具大合集！
+为了保障可读性并减少用户选择成本，每个工具我都有打分，根据功能、易用性、付费、安全来综合评分，满分为5分，评价低于3分的不建议使用。
+首先我将常用的工具进行了一个分类，可以分为如下几类，并按照分类进行逐一评测和分析
 
 
-<!-- CanvasBackground -->
+文字类
+文字类顾名思义就是对文字进行处理，一般分为两种：
 
+笔记违规词检测工具
+文字修饰工具
 
-    
-  </div>
-</body>
+其实这两个工具用的人都不多，文字修饰工具用的少一般是因为场景有限，而笔记违规词检测工具则是因为大多数人都不知道有这种好东西存在！！！
+有了这种东西降权，违规通通闪开，必须强烈安利一下。 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/27/xhs-5/" title="小红书KOL速成指南(6)：账号定位的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(6)：账号定位的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-5/" title="小红书KOL速成指南(6)：账号定位的秘密">小红书KOL速成指南(6)：账号定位的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:31.000Z" title="发表于 2020-10-27 17:24:31">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%B4%A6%E5%8F%B7/">账号</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E8%B4%A6%E5%8F%B7/">账号</a></span></div><div class="content">小红书KOL速成指南(6)：账号定位的秘密“账号定位”是一个账号最最基础的事情，在我写《小红书KOL速成指南》系列的时候已经把“账号定位”放在第一位来讲了，其中我对小红书平台数据和用户人群做了较为详细的描述，结合这些内容，只需要在对自己个人进行一些分析，就完全可以做出运营小红书账号的个人定位。
+于是…我在文中就忽略了个人的一些分析方法，这导致很多人找我来咨询的主要问题就是账号定位，虽然后来我又在其他文章了补充了一点，但是似乎问的人还是很多，而这种具备方法论的事情当然不是非要加入我的知识星球向我咨询，我完全可以将我的思考逻辑分享出来。
+所以今天的主题非常明确，我会一步步的教你如何从零做一个小红书账号的定位。
+刚上来还没搞清楚状况就直接下手这显然是运营的大忌，所以我们必须在这之前搞清楚，到底什么是定位以及这东西对我来说有什么用。
 
-</html>
+定位是什么？对我有什么用？
+按照我自己的理解：定位就是为无边的世界划一个界限。
+说人话就是在没有定位之前你什么都可以做，但一旦做好定位之后，你将只能做定位界限内的事情，同时，尽管你没有对人大喊我的定位是什么，但人人通过你所做的事情，就明白了你的定位是什么，可以看 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/27/xhs-4/" title="小红书KOL速成指南(5)：笔记发布时间的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(5)：笔记发布时间的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-4/" title="小红书KOL速成指南(5)：笔记发布时间的秘密">小红书KOL速成指南(5)：笔记发布时间的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:28.000Z" title="发表于 2020-10-27 17:24:28">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/">发布时间</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/">发布时间</a></span></div><div class="content">小红书KOL速成指南(5)：笔记发布时间的秘密距离小红书下架已经过去了2个月，重新上架的时间仍然是未知，这段时间对于小红书的影响无疑是巨大的，但长久来看，这种影响对小红书来说又是塞翁失马焉知非福，快速奔跑的小红书成为了一个虚拟的生活方式城市，但快速建造的靓丽城市的内部必定有着许多漏洞，因此这次下架对于小红书来说，是一个停下来整理整理的好机会。
+根据近日采访小红书的凤凰科技媒体报道：
+
+解读一下新的审核流程：
+****
+意味着你发布的笔记被机器的规则命中，意味着将导致人工二次审核，审核结束后决定被推荐或者被删除（但个人猜测，小红书每天笔记量那么大，正确的做法应该是有比例的，如果机器判断80%-100%有问题则机器就直接处理了，不能保证80%以上的，可能疑似有问题的才会人工二次处理，所以并不是所有笔记一定是人工处理，当然机器会不会误伤？答案是一定会，因为机器无法理解复杂的语言）；
+
+（小红书新版审核流程图）
+****
+这也意味着人工审核将对笔记内容是否违规变的主观，由于一个审核人员大量查看重复内容，又没有明确的判断标准，错杀应该是必不可少的了，而在我的群内的很多小伙伴也表示最近审核特别“变 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/27/xhs-3/" title="小红书KOL速成指南(4):小红书运营思维的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(4):小红书运营思维的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-3/" title="小红书KOL速成指南(4):小红书运营思维的秘密">小红书KOL速成指南(4):小红书运营思维的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:24.000Z" title="发表于 2020-10-27 17:24:24">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%BF%90%E8%90%A5/">运营</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E8%BF%90%E8%90%A5/">运营</a></span></div><div class="content">小红书KOL速成指南(4):小红书运营思维的秘密写这篇文章的时候请先允许我碎碎念几句。
+最近加我的人非常多，其中一部分人具备了一个共同特点：文章都没有看完，就跑过来问我问题。这就相当于我把饭做好了，还得喂你吃？我可以接受看完不懂前提下的提问和交流，但我无法接受懒惰而不去学习，这种情况是我拯救不了的。除此以外我上周说过最多的一句话：“小红书不是微博或朋友圈”；而这也是我们今天小红书KOL速成指南（4）的主题。
+很多人这里会比较疑惑，为什么做好小红书和运营思维扯到一起去了，与微博或者朋友圈有什么关系吗？
+因为我认为去做小红书或者做微信公众号亦或者做抖音等，除了平台规则不同以外，它们的做号的技巧本质是共通的，所以我们最重要的是学会这个“运营思维”。
+
+小红书不是微博或朋友圈
+根据最近很多人咨询我的问题总结，发现多数做小红书的人，也都是微博或者朋友圈的活跃者，所以从微博或者朋友圈突然跑过做小红书的时候也只是把小红书当成了一个新的“微博或朋友圈”，这也代表了成功掉坑，不是违规限流，就是内容没人看。
+我一直在强调小红书与微博和朋友圈不同，到底有哪些不同？为了弄清楚这个平台的运营方式，我们必须去了解 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/27/xhs-2/" title="小红书KOL速成指南(3):笔记排名与权重算法的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(3):笔记排名与权重算法的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-2/" title="小红书KOL速成指南(3):笔记排名与权重算法的秘密">小红书KOL速成指南(3):笔记排名与权重算法的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:19.000Z" title="发表于 2020-10-27 17:24:19">2020-10-27</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a></span></div><div class="content">小红书KOL速成指南(3):笔记排名与权重算法的秘密小红书的大清洗已经过去了两个月，但对于很多KOL和企业来说，大清洗带来的影响却还远远没有过去，但企业和KOL都没法在继续等待平台的“回心转意”，唯有慢慢适应平台的新规则，才能成为新环境下的掘金者；
+在这种情况下，仍需在小红书变现的企业和KOl的需求就越来越明确：笔记排名；
+这从某一个角度来说，笔记排名代表着一篇笔记所能达到的最强推广效果。
+
+笔记排名是什么？
+为什么笔记排名能带来这么大的影响力？这里我必须得给你讲个故事，让我们时光倒流，回到中国互联网早期的百度。
+依靠着优秀的搜索引擎技术，百度毫无疑问的成为了中国互联网的真正入口，百度像一个分配机器，将每个人根据不同的搜索结果进行分配，例如你搜了新浪，将给你展示出新浪，新浪微博以及与新浪有关的一切，在整个海量的互联网信息中，对内容的索引和整理变的非常重要，正因为如此，所以百度才成为了互联网的第一站，然后就是我们都知道的，你搜了哪个词，就会展现哪种词的内容，这无疑也带来了巨大的商机，例如你搜索了特斯拉，那么几乎很明显，你是特斯拉的潜在客户，如果在特斯拉的内容前面加上一个同级别的其他汽车的 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/10/27/xhs-1/" title="小红书KOL速成指南(2)：笔记限流的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(2)：笔记限流的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs-1/" title="小红书KOL速成指南(2)：笔记限流的秘密">小红书KOL速成指南(2)：笔记限流的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T09:24:13.000Z" title="发表于 2020-10-27 17:24:13">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E9%99%90%E6%B5%81/">限流</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E9%99%90%E6%B5%81/">限流</a></span></div><div class="content">小红书KOL速成指南(2)：笔记限流的秘密小红书KOL速成指南系列第一篇写出来之后，收到了多个运营圈账号的转载，也收获了相当多的好评，同时也认识了很多做小红书的朋友，这也是我继续创作小红书KOL速成指南系列第二篇的动力。
+
+第二篇的主题来源于很多做小红书朋友咨询我的问题：“为什么我的笔记限流了？” 因为问的人太多了，很难在一一回复，我就单独写一篇文章讲讲，小红书笔记限流的秘密；
+
+账号违规
+但是在讲小红书“笔记”限流之前，我们先讲一下你的账号本身的问题，因为我们去做账号诊断必须是从上至下，从大到小的顺序，这意味着如果你的账号有问题，就和你笔记没什么关系了，哪怕笔记再好，也是被限流的。
+到底什么情况下账号会被限流？
+1、一个手机多个账号登录；这点太明显不过了，这个特征是系统典型识别的，基本刷粉丝一类的账号都是这么操作的，所以如果一旦一机多号，就很容易被系统识别为“可能是水军”，被特别关照基本是必然的；那么到底多少个号算一机多号？我个人觉的2个是比较容易接受的范围，超过2个风险就比较大。当然最好一机一号，不过回到日常情况来说，像我们这种去运营的kol，一机多号的情况也比较少见；
+2、昵称涉 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/10/27/xhs/" title="小红书KOL速成指南(1)：爆款笔记的秘密">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(1)：爆款笔记的秘密"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/10/27/xhs/" title="小红书KOL速成指南(1)：爆款笔记的秘密">小红书KOL速成指南(1)：爆款笔记的秘密</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-27T08:26:50.000Z" title="发表于 2020-10-27 16:26:50">2020-10-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><i class="fas fa-angle-right"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E7%88%86%E6%AC%BE/">爆款</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/">小红书</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/%E7%88%86%E6%AC%BE/">爆款</a></span></div><div class="content">小红书KOL速成指南(1)：爆款笔记的秘密在2019年自媒体与网红越来越受资本青睐的同时，承载这些网红和自媒体的平台也开始红的厉害，带货是平台流量变现绕不过的关键词，如今，小红书已经成长为一家拥有2.5亿注册用户、估值30亿美元的独角兽企业，而小红书作为依靠UGC种草起家的社区，对带货则又有额外的加成，这自然成了各个品牌商家亦或者网红的必争之地，在小红书上只要你的粉丝数能过1w，点赞收藏过5w，比例1:5或以上情况下，发布广告性质的种草往往有不菲的收入，如何打造爆款笔记吸粉，这成为了小红书运营者心中的痛。
+我同样带着疑问入驻了小红书，7天发布10条笔记，获得了10000+粉丝，50000+赞藏，单篇笔记曝光最高到20w+，按照这种效率去做，其实很快可以突破10w粉丝大关，成为一名小红书KOL，因此我似乎摸清了小红书的套路……
+
+很遗憾的是，当时只抱着试试看的态度，这个定位并不符合我自己的身份（最基本的我使用了女性身份，但我是男性），于是只能将账号送给了朋友，以下就是我做小红书这几天的经验分享，做好以下这几点它将带你快速从0开始到大V。
+
+账号的定位
+准备工作
+如何打造热点笔记？
+如何吸 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">技术笔记分享</div><div class="author-info__description">技术笔记分享</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/10/27/xhs-8/" title="小红书KOL速成指南(9):超详细小红书企业号完整运营方案"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(9):超详细小红书企业号完整运营方案"/></a><div class="content"><a class="title" href="/2020/10/27/xhs-8/" title="小红书KOL速成指南(9):超详细小红书企业号完整运营方案">小红书KOL速成指南(9):超详细小红书企业号完整运营方案</a><time datetime="2020-10-27T09:24:44.000Z" title="发表于 2020-10-27 17:24:44">2020-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/27/xhs-7/" title="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案"/></a><div class="content"><a class="title" href="/2020/10/27/xhs-7/" title="小红书KOL速成指南(8)：史上最强的小红书品牌投放方案">小红书KOL速成指南(8)：史上最强的小红书品牌投放方案</a><time datetime="2020-10-27T09:24:40.000Z" title="发表于 2020-10-27 17:24:40">2020-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/27/xhs-6/" title="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）"/></a><div class="content"><a class="title" href="/2020/10/27/xhs-6/" title="小红书KOL速成指南(7)：小红书运营工具大合集（附教程）">小红书KOL速成指南(7)：小红书运营工具大合集（附教程）</a><time datetime="2020-10-27T09:24:35.000Z" title="发表于 2020-10-27 17:24:35">2020-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/27/xhs-5/" title="小红书KOL速成指南(6)：账号定位的秘密"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(6)：账号定位的秘密"/></a><div class="content"><a class="title" href="/2020/10/27/xhs-5/" title="小红书KOL速成指南(6)：账号定位的秘密">小红书KOL速成指南(6)：账号定位的秘密</a><time datetime="2020-10-27T09:24:31.000Z" title="发表于 2020-10-27 17:24:31">2020-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/27/xhs-4/" title="小红书KOL速成指南(5)：笔记发布时间的秘密"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小红书KOL速成指南(5)：笔记发布时间的秘密"/></a><div class="content"><a class="title" href="/2020/10/27/xhs-4/" title="小红书KOL速成指南(5)：笔记发布时间的秘密">小红书KOL速成指南(5)：笔记发布时间的秘密</a><time datetime="2020-10-27T09:24:28.000Z" title="发表于 2020-10-27 17:24:28">2020-10-27</time></div></div></div></div></div><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/"><span class="card-category-list-name">小红书</span><span class="card-category-list-count">8</span></a></li><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E4%BC%81%E4%B8%9A%E5%8F%B7/"><span class="card-category-list-name">企业号</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/"><span class="card-category-list-name">发布时间</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%93%81%E7%89%8C/"><span class="card-category-list-name">品牌</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/"><span class="card-category-list-name">工具大合集</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E7%88%86%E6%AC%BE/"><span class="card-category-list-name">爆款</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%B4%A6%E5%8F%B7/"><span class="card-category-list-name">账号</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E7%BA%A2%E4%B9%A6/%E8%BF%90%E8%90%A5/"><span class="card-category-list-name">运营</span><span class="card-category-list-count">1</span></a></li></ul>
+            <li class="card-category-list-item more is-center"><a class="card-category-list-link-more" href="/categories/">
+                <span>查看更多</span><i class="fas fa-angle-right"></i></a></li>
+            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%BC%81%E4%B8%9A%E5%8F%B7/" style="font-size: 1.1em; color: #999">企业号</a> <a href="/tags/%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4/" style="font-size: 1.1em; color: #999">发布时间</a> <a href="/tags/%E5%93%81%E7%89%8C/" style="font-size: 1.1em; color: #999">品牌</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 1.5em; color: #99a9bf">小红书</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%A4%A7%E5%90%88%E9%9B%86/" style="font-size: 1.1em; color: #999">工具大合集</a> <a href="/tags/%E7%88%86%E6%AC%BE/" style="font-size: 1.1em; color: #999">爆款</a> <a href="/tags/%E8%B4%A6%E5%8F%B7/" style="font-size: 1.1em; color: #999">账号</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 1.1em; color: #999">运营</a> <a href="/tags/%E9%99%90%E6%B5%81/" style="font-size: 1.1em; color: #999">限流</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">9</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">9</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-12-06T09:24:58.279Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 技术笔记分享</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
