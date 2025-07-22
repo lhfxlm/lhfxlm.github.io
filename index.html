@@ -480,9 +480,9 @@
         <section class="category-section">
             <div class="category-filters">
                 <button class="filter-btn active" data-category="all">全部资源</button>
+                <button class="filter-btn" data-category="ac">AI自媒体陪跑营</button>
                 <button class="filter-btn" data-category="AI">国产AI</button>
                 <button class="filter-btn" data-category="openai">国外AI</button>
-                <button class="filter-btn" data-category="ac">AI自媒体陪跑营</button>
                 <button class="filter-btn" data-category="aitools">AI工具箱</button>
                 <button class="filter-btn" data-category="money">理财网站</button>
 
@@ -515,9 +515,9 @@
                 <div class="form-group">
                     <label for="linkCategory">分类 <span style="color: var(--warning);">*</span></label>
                     <select id="linkCategory">
+                        <option value="ac">AI自媒体陪跑营</option>
                         <option value="AI">国产AI</option>
                         <option value="openai">国外AI</option>
-                        <option value="ac">AI自媒体陪跑营</option>
                         <option value="aitools">AI工具箱</option>
                         <option value="money">理财网站</option>
                         <option value="other">其他</option>
@@ -605,6 +605,41 @@
             } else {
                 // 默认数据
                 return [
+                    {
+                        id: 6,
+                        title: "AI自媒体实战营手册",
+                        url: "https://xcn9kq8n7sbs.feishu.cn/wiki/HjYXwb0lpiLn1nkUpXAc5PURnOd?from=from_copylink",
+                        category: "ac",
+                        description: "AI自媒体实战营手册。"
+                    },
+                    {
+                        id: 6,
+                        title: "第一课",
+                        url: "https://1il9r.hk.xet.citv.cn/sl/2SeTlo",
+                        category: "ac",
+                        description: "普通人怎么做自媒体？。"
+                    },
+                    {
+                        id: 6,
+                        title: "第二课",
+                        url: "https://1il9r.hk.xet.citv.cn/sl/2B4rGk",
+                        category: "ac",
+                        description: "各平台的运营区别。"
+                    },
+                    {
+                        id: 6,
+                        title: "第三课",
+                        url: "https://1il9r.hk.xet.citv.cn/sl/XGn21",
+                        category: "ac",
+                        description: "如何搭建一个优秀的账号。"
+                    },
+                    {
+                        id: 6,
+                        title: "第四课",
+                        url: "https://1il9r.hk.xet.citv.cn/sl/2AtbbS",
+                        category: "ac",
+                        description: "用AI快速找到自带流量的好选课。"
+                    },
                     {
                         id: 0,
                         title: "coze",
@@ -769,41 +804,6 @@
                         description: "最强的开源大语言模型。"
                     },
                     {
-                        id: 6,
-                        title: "AI自媒体实战营手册",
-                        url: "https://xcn9kq8n7sbs.feishu.cn/wiki/HjYXwb0lpiLn1nkUpXAc5PURnOd?from=from_copylink",
-                        category: "ac",
-                        description: "AI自媒体实战营手册。"
-                    },
-                    {
-                        id: 6,
-                        title: "第一课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2SeTlo",
-                        category: "ac",
-                        description: "普通人怎么做自媒体？。"
-                    },
-                    {
-                        id: 6,
-                        title: "第二课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2B4rGk",
-                        category: "ac",
-                        description: "各平台的运营区别。"
-                    },
-                    {
-                        id: 6,
-                        title: "第三课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/XGn21",
-                        category: "ac",
-                        description: "如何搭建一个优秀的账号。"
-                    },
-                    {
-                        id: 6,
-                        title: "第四课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2AtbbS",
-                        category: "ac",
-                        description: "用AI快速找到自带流量的好选课。"
-                    },
-                    {
                         id: 8,
                         title: "理杏仁估值",
                         url: "https://www.lixinger.com/analytics/index/dashboard/value",
@@ -895,9 +895,9 @@
             <!-- 分类导航 -->
             websitesToRender.forEach(website => {
                 const categoryMap = {
+                    'ac': 'AI自媒体陪跑营',
                     'AI': '国产AI',
                     'openai': '国外AI',
-                    'ac': 'AI自媒体陪跑营',
                     'aitools': 'AI工具箱',
                     'money': '理财网站',
                     'other': '其他'
