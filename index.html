@@ -3,49 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI工具库</title>
+    <title>AI工具库导航站</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 重置默认样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
         }
 
+        /* 定义CSS变量 */
         :root {
             --primary: #4361ee;
-            --secondary: #3f37c9;
+            --secondary: #3a0ca3;
             --accent: #4895ef;
             --success: #4cc9f0;
             --warning: #f72585;
             --light: #f8f9fa;
             --dark: #212529;
-            --card-height: 120px;
+            --card-height: 130px;
             --transition: all 0.3s ease;
+            --ai-gradient: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+            --ai-gradient-hover: linear-gradient(135deg, #4361ee 0%, #4895ef 100%);
         }
 
+        /* 全局样式 */
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
             color: var(--dark);
             min-height: 100vh;
             padding-bottom: 60px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* 头部样式 */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 1.5rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: var(--ai-gradient);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(58, 12, 163, 0.2);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
         .header-content {
@@ -64,31 +71,48 @@
             font-size: 1.8rem;
             font-weight: 700;
             text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
         }
 
         .logo i {
             font-size: 2.2rem;
             color: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 15px;
         }
 
         nav a {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 8px 15px;
+            border-radius: 30px;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
         }
 
         nav a:hover, nav a.active {
             color: white;
             background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         /* 搜索区域 */
@@ -103,9 +127,10 @@
             background: white;
             border-radius: 50px;
             padding: 5px;
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.25);
             display: flex;
             overflow: hidden;
+            border: 2px solid var(--accent);
         }
 
         .search-box input {
@@ -114,10 +139,11 @@
             border: none;
             font-size: 1.1rem;
             outline: none;
+            background: transparent;
         }
 
         .search-box button {
-            background: var(--primary);
+            background: var(--ai-gradient);
             color: white;
             border: none;
             padding: 0 35px;
@@ -125,10 +151,61 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .search-box button:hover {
-            background: var(--secondary);
+            background: var(--ai-gradient-hover);
+            transform: scale(1.02);
+        }
+
+        /* 统计卡片 */
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            min-width: 180px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.15);
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+            line-height: 1.2;
+            font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 10px;
         }
 
         /* 分类导航 */
@@ -143,6 +220,7 @@
             border-bottom: 3px solid var(--accent);
             color: var(--secondary);
             display: inline-block;
+            font-weight: 700;
         }
 
         .category-filters {
@@ -150,6 +228,7 @@
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 30px;
+            justify-content: center;
         }
 
         .filter-btn {
@@ -161,10 +240,13 @@
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .filter-btn:hover, .filter-btn.active {
-            background: var(--primary);
+            background: var(--ai-gradient);
             color: white;
             border-color: var(--primary);
             box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
@@ -173,7 +255,7 @@
         /* 链接网格 */
         .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 20px;
         }
@@ -182,17 +264,19 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             height: var(--card-height);
             transition: var(--transition);
             display: flex;
             flex-direction: column;
             position: relative;
+            border: 1px solid rgba(67, 97, 238, 0.1);
         }
 
         .link-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(67, 97, 238, 0.2);
+            box-shadow: 0 12px 30px rgba(67, 97, 238, 0.2);
+            border-color: var(--accent);
         }
 
         .card-header {
@@ -204,10 +288,10 @@
         }
 
         .favicon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            background: var(--ai-gradient);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -218,8 +302,8 @@
         }
 
         .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--dark);
             white-space: nowrap;
             overflow: hidden;
@@ -229,27 +313,36 @@
         .card-content {
             padding: 16px;
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .card-content a {
             color: var(--primary);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: block;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            transition: color 0.2s;
+        }
+
+        .card-content a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
         }
 
         .card-content p {
-            color: #666;
+            color: #555;
             font-size: 0.9rem;
             line-height: 1.5;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            flex-grow: 1;
         }
 
         .category-tag {
@@ -259,23 +352,26 @@
             background: var(--accent);
             color: white;
             font-size: 0.75rem;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 30px;
+            font-weight: 500;
         }
 
         /* 添加链接区域 */
         .add-link-section {
-            background: white;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
             padding: 30px;
             margin: 50px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(67, 97, 238, 0.1);
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin-top: 20px;
         }
 
@@ -287,43 +383,51 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 14px;
+            padding: 14px 18px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
             transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--accent);
             outline: none;
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            background: white;
         }
 
         .submit-btn {
-            background: var(--primary);
+            background: var(--ai-gradient);
             color: white;
             border: none;
-            padding: 15px 35px;
+            padding: 16px 40px;
             font-size: 1.1rem;
             font-weight: 600;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
         }
 
         .submit-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+            background: var(--ai-gradient-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.4);
         }
 
         /* 成功提示 */
@@ -333,16 +437,17 @@
             right: 30px;
             background: var(--success);
             color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 18px 28px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             z-index: 1000;
             opacity: 0;
             transform: translateY(100px);
             transition: all 0.4s ease;
+            max-width: 350px;
         }
 
         .toast.show {
@@ -351,7 +456,7 @@
         }
 
         .toast i {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
         }
 
         /* 错误提示 */
@@ -360,14 +465,16 @@
             font-size: 0.85rem;
             margin-top: 5px;
             display: none;
+            font-weight: 500;
         }
 
         /* 页脚 */
         footer {
             background: var(--dark);
             color: rgba(255, 255, 255, 0.7);
-            padding: 40px 0 20px;
-            margin-top: 60px;
+            padding: 50px 0 20px;
+            margin-top: 20px;
+            position: relative;
         }
 
         .footer-content {
@@ -379,7 +486,20 @@
         .footer-column h3 {
             color: white;
             margin-bottom: 20px;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
         }
 
         .footer-column ul {
@@ -396,23 +516,25 @@
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-size: 1.05rem;
         }
 
         .footer-column a:hover {
             color: white;
-            padding-left: 5px;
+            transform: translateX(5px);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
+            padding-top: 40px;
+            margin-top: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
         }
 
         /* 响应式设计 */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .header-content {
                 flex-direction: column;
                 text-align: center;
@@ -434,10 +556,52 @@
             .search-box button {
                 padding: 15px;
                 border-radius: 0 0 20px 20px;
+                justify-content: center;
             }
 
             .category-filters {
                 justify-content: center;
+            }
+
+            .stat-card {
+                min-width: 160px;
+                padding: 15px;
+            }
+
+            .stat-value {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            nav a {
+                padding: 6px 12px;
+                font-size: 0.95rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -448,13 +612,14 @@
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
-                    <i class="fas fa-compass"></i>
+                    <i class="fas fa-robot"></i>
                     <span>AI工具库</span>
                 </a>
                 <nav>
                     <ul>
-                        <li><a href="#" class="active">首页</a></li>
-                        <li><a href="#">关于本站</a></li>
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> 首页</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> 关于本站</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 添加工具</a></li>
                     </ul>
                 </nav>
             </div>
@@ -464,28 +629,86 @@
     <div class="container">
         <!-- 搜索区域 -->
         <section class="search-section">
-            <h1 style="font-size: 2.5rem; margin-bottom: 25px; color: var(--secondary);">探索优质AI资源</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 35px; color: #555; max-width: 700px; margin-left: auto; margin-right: auto;">
-                精心收集的优质AI网站，帮助您快速找到所需资源
+            <h1 style="font-size: 2.6rem; margin-bottom: 20px; color: var(--secondary); background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;">
+                探索AI世界，发现智能工具
+            </h1>
+            <p style="font-size: 1.2rem; margin-bottom: 35px; color: #555; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center;">
+                精心收集的优质AI工具，助您快速找到所需资源，提升工作效率
             </p>
             <div class="search-box">
-                <input type="text" placeholder="输入关键词搜索资源..." id="searchInput">
+                <input type="text" placeholder="输入关键词搜索AI工具..." id="searchInput">
                 <button onclick="performSearch()">
-                    <i class="fas fa-search"></i> 搜索
+                    <i class="fas fa-search"></i> 搜索AI工具
                 </button>
+            </div>
+        </section>
+
+        <!-- 网站统计 -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="stat-value" id="totalLinks">0</div>
+                <div class="stat-label">收录工具</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value" id="uniqueVisitors">0</div>
+                <div class="stat-label">独立访客</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-value" id="totalVisits">0</div>
+                <div class="stat-label">总访问量</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="stat-value" id="todayVisits">0</div>
+                <div class="stat-label">今日访问</div>
             </div>
         </section>
 
         <!-- 分类导航 -->
         <section class="category-section">
+            <h2 class="section-title">AI工具分类</h2>
             <div class="category-filters">
-                <button class="filter-btn active" data-category="all">全部资源</button>
-                <button class="filter-btn" data-category="ac">AI自媒体陪跑营</button>
-                <button class="filter-btn" data-category="AI">国产AI</button>
-                <button class="filter-btn" data-category="openai">国外AI</button>
-                <button class="filter-btn" data-category="aitools">AI工具箱</button>
-                <button class="filter-btn" data-category="money">理财网站</button>
-
+                <button class="filter-btn active" data-category="all">
+                    <i class="fas fa-layer-group"></i> 全部资源
+                </button>
+                <button class="filter-btn" data-category="ac">
+                    <i class="fas fa-graduation-cap"></i> AI陪跑营
+                </button>
+                <button class="filter-btn" data-category="AI">
+                    <i class="fas fa-flag"></i> 国产AI
+                </button>
+                <button class="filter-btn" data-category="openai">
+                    <i class="fas fa-globe-americas"></i> 国外AI
+                </button>
+                <button class="filter-btn" data-category="aitools">
+                    <i class="fas fa-toolbox"></i> AI工具箱
+                </button>
+                <button class="filter-btn" data-category="gwwz">
+                    <i class="fas fa-external-link-alt"></i> 国外网站
+                </button>
+                <button class="filter-btn" data-category="api">
+                    <i class="fas fa-code"></i> API接口
+                </button>
+                <button class="filter-btn" data-category="tools">
+                    <i class="fas fa-tools"></i> 实用工具
+                </button>
+                <button class="filter-btn" data-category="money">
+                    <i class="fas fa-chart-line"></i> 理财投资
+                </button>
             </div>
 
             <!-- 链接网格 -->
@@ -496,43 +719,56 @@
 
         <!-- 添加链接区域 -->
         <section class="add-link-section">
-            <h2 class="section-title">添加新链接</h2>
-            <p style="margin-bottom: 25px; color: #666;">推荐您认为有价值的网站（数据保存在本地浏览器中）</p>
+            <h2 class="section-title">添加新工具</h2>
+            <p style="margin-bottom: 25px; color: #666; font-size: 1.1rem;">
+                推荐您认为有价值的AI工具（数据保存在本地浏览器中，仅您可见）
+            </p>
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="linkTitle">网站名称 <span style="color: var(--warning);">*</span></label>
-                    <input type="text" id="linkTitle" placeholder="例如：GitHub">
-                    <div class="error-message" id="titleError">请输入网站名称</div>
+                    <label for="linkTitle">
+                        <i class="fas fa-heading"></i> 工具名称 <span style="color: var(--warning);">*</span>
+                    </label>
+                    <input type="text" id="linkTitle" placeholder="例如：ChatGPT">
+                    <div class="error-message" id="titleError">请输入工具名称</div>
                 </div>
 
                 <div class="form-group">
-                    <label for="linkUrl">网站地址 <span style="color: var(--warning);">*</span></label>
+                    <label for="linkUrl">
+                        <i class="fas fa-link"></i> 工具网址 <span style="color: var(--warning);">*</span>
+                    </label>
                     <input type="url" id="linkUrl" placeholder="https://example.com">
                     <div class="error-message" id="urlError">请输入有效的URL地址</div>
                 </div>
-                <!-- 分类导航 -->
+
                 <div class="form-group">
-                    <label for="linkCategory">分类 <span style="color: var(--warning);">*</span></label>
+                    <label for="linkCategory">
+                        <i class="fas fa-folder"></i> 分类 <span style="color: var(--warning);">*</span>
+                    </label>
                     <select id="linkCategory">
-                        <option value="ac">AI自媒体陪跑营</option>
+                        <option value="ac">AI陪跑营</option>
                         <option value="AI">国产AI</option>
                         <option value="openai">国外AI</option>
                         <option value="aitools">AI工具箱</option>
-                        <option value="money">理财网站</option>
+                        <option value="gwwz">国外网站</option>
+                        <option value="api">API接口</option>
+                        <option value="tools">实用工具</option>
+                        <option value="money">理财投资</option>
                         <option value="other">其他</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="linkDesc">网站描述 <span style="color: var(--warning);">*</span></label>
-                    <textarea id="linkDesc" rows="2" placeholder="网站的主要功能或特点..."></textarea>
-                    <div class="error-message" id="descError">请输入网站描述</div>
+                    <label for="linkDesc">
+                        <i class="fas fa-align-left"></i> 工具描述 <span style="color: var(--warning);">*</span>
+                    </label>
+                    <textarea id="linkDesc" rows="3" placeholder="工具的主要功能、特点或使用场景..."></textarea>
+                    <div class="error-message" id="descError">请输入工具描述</div>
                 </div>
             </div>
 
             <button class="submit-btn" onclick="addNewLink()">
-                <i class="fas fa-plus-circle"></i> 添加网站
+                <i class="fas fa-plus-circle"></i> 添加AI工具
             </button>
         </section>
     </div>
@@ -542,7 +778,7 @@
         <i class="fas fa-check-circle"></i>
         <div>
             <strong>添加成功！</strong>
-            <p>网站已添加到导航列表</p>
+            <p>工具已添加到AI工具库</p>
         </div>
     </div>
 
@@ -551,31 +787,31 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>静态导航网站</h3>
+                    <h3>AI工具库导航</h3>
                     <p style="margin-bottom: 20px; line-height: 1.6;">
-                        纯HTML5实现的导航网站，无需数据库支持，所有数据保存在本地浏览器中。
+                        专注于收集和整理优质AI工具的资源导航站，帮助用户快速发现和利用人工智能工具，提升工作效率和创造力。
                     </p>
                 </div>
 
                 <div class="footer-column">
                     <h3>主要分类</h3>
                     <ul>
-                        <li><a href="#"><i class="fas fa-code"></i> 技术开发</a></li>
-                        <li><a href="#"><i class="fas fa-paint-brush"></i> 设计资源</a></li>
-                        <li><a href="#"><i class="fas fa-search"></i> AI工具</a></li>
-                        <li><a href="#"><i class="fas fa-graduation-cap"></i> 学习平台</a></li>
-                        <li><a href="#"><i class="fas fa-tools"></i> 效率工具</a></li>
+                        <li><a href="#"><i class="fas fa-graduation-cap"></i> AI陪跑营</a></li>
+                        <li><a href="#"><i class="fas fa-flag"></i> 国产AI工具</a></li>
+                        <li><a href="#"><i class="fas fa-globe-americas"></i> 国外AI工具</a></li>
+                        <li><a href="#"><i class="fas fa-toolbox"></i> AI工具箱</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> 理财投资</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
                     <h3>功能特点</h3>
                     <ul>
-                        <li><a href="#"><i class="fas fa-plus-circle"></i> 添加新链接</a></li>
+                        <li><a href="#"><i class="fas fa-plus-circle"></i> 添加新工具</a></li>
                         <li><a href="#"><i class="fas fa-filter"></i> 分类筛选</a></li>
-                        <li><a href="#"><i class="fas fa-search"></i> 搜索功能</a></li>
+                        <li><a href="#"><i class="fas fa-search"></i> 智能搜索</a></li>
                         <li><a href="#"><i class="fas fa-mobile-alt"></i> 响应式设计</a></li>
-                        <li><a href="#"><i class="fas fa-save"></i> 本地存储</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> 访问统计</a></li>
                     </ul>
                 </div>
 
@@ -591,7 +827,7 @@
             </div>
 
             <div class="copyright">
-                <p>&copy; 2018 静态导航网站 - 纯HTML5实现 | 共收录 <span id="totalLinks">0</span> 个资源</p>
+                <p>&copy; <span id="currentYear"></span> AI工具库导航站 - 纯前端实现 | 本站已被访问 <span id="footerVisitCount">0</span> 次 | 共收录 <span id="footerTotalLinks">0</span> 个AI工具</p>
             </div>
         </div>
     </footer>
@@ -605,260 +841,82 @@
             } else {
                 // 默认数据
                 return [
-                    {
-                        id: 6,
-                        title: "AI自媒体实战营手册",
-                        url: "https://xcn9kq8n7sbs.feishu.cn/wiki/HjYXwb0lpiLn1nkUpXAc5PURnOd?from=from_copylink",
-                        category: "ac",
-                        description: "AI自媒体实战营手册。"
-                    },
-                    {
-                        id: 6,
-                        title: "第一课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2SeTlo",
-                        category: "ac",
-                        description: "普通人怎么做自媒体？。"
-                    },
-                    {
-                        id: 6,
-                        title: "第二课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2B4rGk",
-                        category: "ac",
-                        description: "各平台的运营区别。"
-                    },
-                    {
-                        id: 6,
-                        title: "第三课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/XGn21",
-                        category: "ac",
-                        description: "如何搭建一个优秀的账号。"
-                    },
-                    {
-                        id: 6,
-                        title: "第四课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/2AtbbS",
-                        category: "ac",
-                        description: "用AI快速找到自带流量的好选课。"
-                    },
-                    {
-                        id: 6,
-                        title: "第五课",
-                        url: "https://1il9r.hk.xet.citv.cn/sl/1cFbeU",
-                        category: "ac",
-                        description: "如何用AI写出一份高质量文案。"
-                    },
-                    {
-                        id: 0,
-                        title: "coze",
-                        url: "https://www.coze.cn/",
-                        category: "AI",
-                        description: "用Agent重塑生产力"
-                    },
-                    {
-                        id: 0,
-                        title: "DeepSeek",
-                        url: "https://chat.deepseek.com/",
-                        category: "AI",
-                        description: "探索未至之境"
-                    },
-                    {
-                        id: 0,
-                        title: "Kimi",
-                        url: "https://www.kimi.com/",
-                        category: "AI",
-                        description: "更强大的AI助手"
-                    },
-                    {
-                        id: 0,
-                        title: "豆包",
-                        url: "https://www.doubao.com/chat/",
-                        category: "AI",
-                        description: "字节跳动旗下AI智能助手"
-                    },
-                    {
-                        id: 0,
-                        title: "通义千问",
-                        url: "https://www.tongyi.com/qianwen/",
-                        category: "AI",
-                        description: "你的实用AI助手"
-                    },
-                    {
-                        id: 0,
-                        title: "智谱清言",
-                        url: "https://chatglm.cn/main/alltoolsdetail?lang=zh",
-                        category: "AI",
-                        description: "中国版对话语言模型，与GLM大模型进行对话"
-                    },
-                    {
-                        id: 0,
-                        title: "文心一言",
-                        url: "https://yiyan.baidu.com/",
-                        category: "AI",
-                        description: "百度推出的基于文心大模型的AI对话互动工具"
-                    },
-                    {
-                        id: 1,
-                        title: "专属网站",
-                        url: "https://pro.4399ai.vip/",
-                        category: "aitools",
-                        description: "匹配正版GPT"
-                    },
-                    {
-                        id: 1,
-                        title: "阿川AI",
-                        url: "https://ai.achuanai.cn/",
-                        category: "aitools",
-                        description: "一款好用的AI助手"
-                    },
-                    {
-                        id: 1,
-                        title: "阿川工具库",
-                        url: "https://www.aiachuan.com/",
-                        category: "aitools",
-                        description: "你的全能搜索导航"
-                    },
+                    //AI陪跑营[1]
+                    { id: 1, title: "AI自媒体实战营手册", url: "https://xcn9kq8n7sbs.feishu.cn/wiki/HjYXwb0lpiLn1nkUpXAc5PURnOd?from=from_copylink", category: "ac", description: "AI自媒体实战营手册" },
+                    { id: 2, title: "第一课", url: "https://1il9r.hk.xet.citv.cn/sl/2SeTlo", category: "ac", description: "普通人怎么做自媒体？" },
+                    { id: 3, title: "第二课", url: "https://1il9r.hk.xet.citv.cn/sl/2B4rGk", category: "ac", description: "各平台的运营区别" },
+                    { id: 4, title: "第三课", url: "https://1il9r.hk.xet.citv.cn/sl/XGn21", category: "ac", description: "如何搭建一个优秀的账号" },
+                    { id: 5, title: "第四课", url: "https://1il9r.hk.xet.citv.cn/sl/2AtbbS", category: "ac", description: "用AI快速找到自带流量的好选课" },
+                    { id: 6, title: "第五课", url: "https://1il9r.hk.xet.citv.cn/sl/1cFbeU", category: "ac", description: "如何用AI写出一份高质量文案" },
 
-                    // {
-                    //     id: 1,
-                    //     title: "顺众AI",
-                    //     url: "http://gpt-aigc.com/",
-                    //     category: "aitools",
-                    //     description: "全网最全AIGC知识库。"
-                    // },
-                    // {
-                    //     id: 1,
-                    //     title: "通往AGI之路",
-                    //     url: "https://www.waytoagi.com/zh",
-                    //     category: "aitools",
-                    //     description: "最好的 AI 知识库和工具站"
-                    // },
-                    // {
-                    //     id: 1,
-                    //     title: "艾文AIGC知识库",
-                    //     url: "https://tauacgr5lqv.feishu.cn/wiki/ZJlswH6QCiDfEtkmBGNcRCfxnx0",
-                    //     category: "aitools",
-                    //     description: "全网最全AIGC知识库。"
-                    // },
+                    //国产AI[2]
+                    { id: 7, title: "coze", url: "https://www.coze.cn/", category: "AI", description: "用Agent重塑生产力" },
+                    { id: 8, title: "DeepSeek", url: "https://chat.deepseek.com/", category: "AI", description: "探索未至之境" },
+                    { id: 9, title: "Kimi", url: "https://www.kimi.com/", category: "AI", description: "更强大的AI助手" },
+                    { id: 10, title: "豆包", url: "https://www.doubao.com/chat/", category: "AI", description: "字节跳动旗下AI智能助手" },
+                    { id: 11, title: "通义千问", url: "https://www.tongyi.com/qianwen/", category: "AI", description: "你的实用AI助手" },
+                    { id: 12, title: "智谱清言", url: "https://chatglm.cn/main/alltoolsdetail?lang=zh", category: "AI", description: "中国版对话语言模型，与GLM大模型进行对话" },
+                    { id: 13, title: "文心一言", url: "https://yiyan.baidu.com/", category: "AI", description: "百度推出的基于文心大模型的AI对话互动工具" },
 
-                    {
-                        id: 2,
-                        title: "ChatGPT",
-                        url: "https://chatgpt.com/",
-                        category: "openai",
-                        description: "OpenAI旗下AI对话工具。"
-                    },
-                    {
-                        id: 2,
-                        title: "perplexity",
-                        url: "https://www.perplexity.ai/",
-                        category: "openai",
-                        description: "最好用的人工智能搜索工具。"
-                    },
-                    {
-                        id: 2,
-                        title: "Claude",
-                        url: "https://www.anthropic.com/claude",
-                        category: "openai",
-                        description: "ChatGPT最为有力的竞争对手之一。"
-                    },
-                    {
-                        id: 2,
-                        title: "Gemini",
-                        url: "https://gemini.google.com/",
-                        category: "openai",
-                        description: "Google推出的AI聊天对话机器人。"
-                    },
-                    {
-                        id: 2,
-                        title: "copilot",
-                        url: "https://copilot.microsoft.com/",
-                        category: "openai",
-                        description: "微软推出的网页版Copilot助手。"
-                    },
-                    {
-                        id: 2,
-                        title: "grok xAI",
-                        url: "https://x.ai/",
-                        category: "openai",
-                        description: "马克斯旗下xAI推出的人工智能助手。"
-                    },
-                    {
-                        id: 2,
-                        title: "Poe",
-                        url: "https://poe.com/",
-                        category: "openai",
-                        description: "Quora推出的问答机器人集合平台。"
-                    },
-                    {
-                        id: 2,
-                        title: "Notion",
-                        url: "https://www.notion.so/zh-cn/product/ai",
-                        category: "openai",
-                        description: "Notion推出的AI内容创作助手。"
-                    },
-                    {
-                        id: 2,
-                        title: "BingChat",
-                        url: "https://www.microsoft.com/zh-cn/edge/features/copilot?form",
-                        category: "openai",
-                        description: "必应聊天，只能在 Edge 中的 Copilot 使用。"
-                    },
-                    {
-                        id: 2,
-                        title: "Meet Llama 4",
-                        url: "https://www.llama.com/",
-                        category: "openai",
-                        description: "最强的开源大语言模型。"
-                    },
-                    {
-                        id: 8,
-                        title: "理杏仁估值",
-                        url: "https://www.lixinger.com/analytics/index/dashboard/value",
-                        category: "money",
-                        description: "用数据认知世界。"
-                    },
-                    {
-                        id: 8,
-                        title: "十年期国债",
-                        url: "https://cn.investing.com/rates-bonds/china-10-year-bond-yield",
-                        category: "money",
-                        description: "中国十年期国债收益率_最新债券利率,价格行情,走势图_英为财情。"
-                    },
-                    {
-                        id: 8,
-                        title: "A股总市值",
-                        url: "https://www.jisilu.cn/data/idx_performance/stat/",
-                        category: "money",
-                        description: "A股全市场统计历史 - 集思录。"
-                    },
-                    {
-                        id: 8,
-                        title: "GDP",
-                        url: "https://data.stats.gov.cn/easyquery.htm?cn=C01&zb=A0201&sj=2024",
-                        category: "money",
-                        description: "国家数据。"
-                    },
-                    {
-                        id: 8,
-                        title: "中国结算",
-                        url: "https://minv.chinaclear.cn/#/nohome",
-                        category: "money",
-                        description: "中国结算。"
-                    },
-                    {
-                        id: 8,
-                        title: "天天基金网",
-                        url: "https://fund.eastmoney.com/",
-                        category: "money",
-                        description: "天天基金网(1234567.com.cn) --首批独立基金销售机构-- 东方财富网旗下基金平台。"
-                    },
-                    {
-                        id: 8,
-                        title: "打新日历",
-                        url: "https://b2b-api.10jqka.com.cn/b2bgw/resource/h5/private/ths_b2b/latest/stock_ipo/stock_ipo/index.html#/ipo?ckey=620CBCC30014&tabIndex=1",
-                        category: "money",
-                        description: "打新日历。"
-                    },
+                    //国外AI[3]
+                    { id: 14, title: "ChatGPT", url: "https://chatgpt.com/", category: "openai", description: "OpenAI旗下AI对话工具" },
+                    //绘画
+                    { id: 23, title: "Midjourney", url: "https://www.midjourney.com/home", category: "openai", description: "最火的AI图像和插画生成工具" },
+                    { id: 23, title: "Clipdrop", url: "https://clipdrop.co/", category: "openai", description: "P图、抠图、移除背景、放大图片、文本删除、绘制图片，一个工具全搞定。无需安装，在线免费使用" },
+                    //视频
+                    { id: 23, title: "HeyGen", url: "https://www.heygen.com/", category: "openai", description: "专业的AI数字人视频生成工具" },
+                    { id: 23, title: "Runway", url: "https://app.runwayml.com/", category: "openai", description: "强大的AI视频制作工具" },
+                    { id: 23, title: "Pika", url: "https://pika.art/home", category: "openai", description: "PikaLabs推出的AI视频生成和编辑工具" },
+                    { id: 23, title: "奇妙元", url: "https://weta365.com/", category: "openai", description: "AI数字人视频生成平台，由出门问问推出" },
+                    //音乐
+                    { id: 23, title: "Stable Audio", url: "https://stableaudio.com/", category: "openai", description: "Stability AI 最新推出的音乐生成工具" },
+                    { id: 23, title: "Suno", url: "https://suno.com/", category: "openai", description: "高质量的AI音乐创作平台" },
+                    //文本工具
+                    { id: 15, title: "perplexity", url: "https://www.perplexity.ai/", category: "openai", description: "最好用的人工智能搜索工具" },
+                    { id: 16, title: "Claude", url: "https://www.anthropic.com/claude", category: "openai", description: "ChatGPT最为有力的竞争对手之一" },
+                    { id: 17, title: "Gemini", url: "https://gemini.google.com/", category: "openai", description: "Google推出的AI聊天对话机器人" },
+                    { id: 18, title: "copilot", url: "https://copilot.microsoft.com/", category: "openai", description: "微软推出的网页版Copilot助手" },
+                    { id: 19, title: "grok xAI", url: "https://x.ai/", category: "openai", description: "马克斯旗下xAI推出的人工智能助手" },
+                    { id: 20, title: "Poe", url: "https://poe.com/", category: "openai", description: "Quora推出的问答机器人集合平台" },
+                    { id: 21, title: "Notion", url: "https://www.notion.so/zh-cn/product/ai", category: "openai", description: "Notion推出的AI内容创作助手" },
+                    { id: 22, title: "BingChat", url: "https://www.microsoft.com/zh-cn/edge/features/copilot?form", category: "openai", description: "必应聊天，只能在 Edge 中的 Copilot 使用" },
+                    { id: 23, title: "Meet Llama 4", url: "https://www.llama.com/", category: "openai", description: "最强的开源大语言模型" },
+
+
+                    //AI工具箱[4]
+                    { id: 24, title: "专属网站", url: "https://pro.4399ai.vip/", category: "aitools", description: "匹配正版GPT" },
+                    { id: 25, title: "阿川AI", url: "https://ai.achuanai.cn/", category: "aitools", description: "一款好用的AI助手" },
+                    { id: 26, title: "阿川工具库", url: "https://www.aiachuan.com/", category: "aitools", description: "你的全能搜索导航" },
+                    { id: 27, title: "顺众AI", url: "http://gpt-aigc.com/", category: "aitools", description: "全网最全AIGC知识库" },
+                    { id: 28, title: "通往AGI之路", url: "https://www.waytoagi.com/zh", category: "aitools", description: "最好的 AI 知识库和工具站" },
+                    { id: 29, title: "艾文AIGC知识库", url: "https://tauacgr5lqv.feishu.cn/wiki/ZJlswH6QCiDfEtkmBGNcRCfxnx0", category: "aitools", description: "全网最全AIGC知识库" },
+
+                    //国外[5]
+                    { id: 30, title: "github", url: "https://github.com/", category: "gwwz", description: "GitHub是世界上最大的代码托管平台" },
+                    { id: 30, title: "github手机搜索", url: "https://github.com/search?q=&type=", category: "gwwz", description: "GitHub是世界上最大的代码托管平台" },
+                    { id: 30, title: "谷歌", url: "https://www.google.com/", category: "gwwz", description: "谷歌官网" },
+                    { id: 30, title: "谷歌邮箱", url: "https://mail.google.com/", category: "gwwz", description: "谷歌邮箱" },
+                    { id: 30, title: "谷歌翻译", url: "https://translate.google.com/", category: "gwwz", description: "谷歌翻译" },
+                    { id: 30, title: "谷歌地图", url: "https://www.google.com/maps", category: "gwwz", description: "谷歌地图" },
+
+                    //API[6]
+                    { id: 31, title: "历史净值", url: "https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code=510500&per=49&page=1", category: "api", description: "天天基金网历史净值" },
+
+                    //tools[7]
+                    { id: 32, title: "微信公众号", url: "https://mp.weixin.qq.com/", category: "tools", description: "微信公众号" },
+                    { id: 32, title: "函数工作流", url: "https://console.huaweicloud.com/functiongraph/?region=cn-south-1#/serverless/functions/manager/code?urn=urn:fss:cn-south-1:82d36912e490413283f43ef389b13040:function:default:quant:latest", category: "tools", description: "华为函数工作流" },
+                    { id: 32, title: "微信公众号", url: "https://mp.weixin.qq.com/", category: "tools", description: "微信公众号" },
+
+                    //理财[8]
+                    { id: 33, title: "理杏仁估值", url: "https://www.lixinger.com/analytics/index/dashboard/value", category: "money", description: "用数据认知世界" },
+                    { id: 34, title: "十年期国债", url: "https://cn.investing.com/rates-bonds/china-10-year-bond-yield", category: "money", description: "中国十年期国债收益率" },
+                    { id: 35, title: "A股总市值", url: "https://www.jisilu.cn/data/idx_performance/stat/", category: "money", description: "A股全市场统计历史 - 集思录" },
+                    { id: 36, title: "GDP", url: "https://data.stats.gov.cn/easyquery.htm?cn=C01&zb=A0201&sj=2024", category: "money", description: "国家数据" },
+                    { id: 37, title: "中国结算", url: "https://minv.chinaclear.cn/#/nohome", category: "money", description: "中国结算" },
+                    { id: 38, title: "天天基金网", url: "https://fund.eastmoney.com/", category: "money", description: "首批独立基金销售机构" },
+                    { id: 39, title: "打新日历", url: "https://b2b-api.10jqka.com.cn/b2bgw/resource/h5/private/ths_b2b/latest/stock_ipo/stock_ipo/index.html#/ipo?ckey=620CBCC30014&tabIndex=1", category: "money", description: "打新日历" },
+                    { id: 40, title: "基金代码", url: "https://github.com/agiagent/fund", category: "money", description: "常用基金代码" },
+                    { id: 40, title: "量化后台", url: "https://www.fortrader.cn/app/#/login", category: "money", description: "量化交易实战营" },
 
                 ];
             }
@@ -867,6 +925,66 @@
         // 保存网站数据到localStorage
         function saveWebsites(websites) {
             localStorage.setItem('websites', JSON.stringify(websites));
+        }
+
+        // 获取访问统计数据
+        function getVisitStats() {
+            const stats = localStorage.getItem('visitStats');
+            if (stats) {
+                return JSON.parse(stats);
+            } else {
+                return {
+                    totalVisits: 0,
+                    uniqueVisitors: 0,
+                    todayVisits: 0,
+                    lastVisitDate: null,
+                    visitorId: generateVisitorId()
+                };
+            }
+        }
+
+        // 保存访问统计数据
+        function saveVisitStats(stats) {
+            localStorage.setItem('visitStats', JSON.stringify(stats));
+        }
+
+        // 生成访客ID
+        function generateVisitorId() {
+            return 'visitor_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+        }
+
+        // 更新访问统计
+        function updateVisitStats() {
+            const stats = getVisitStats();
+            const today = new Date().toDateString();
+
+            // 总访问次数增加
+            stats.totalVisits++;
+
+            // 如果是新访客
+            if (!localStorage.getItem('visitorId')) {
+                stats.uniqueVisitors++;
+                localStorage.setItem('visitorId', stats.visitorId);
+            }
+
+            // 更新今日访问
+            if (stats.lastVisitDate !== today) {
+                stats.todayVisits = 1;
+                stats.lastVisitDate = today;
+            } else {
+                stats.todayVisits++;
+            }
+
+            // 保存更新后的统计
+            saveVisitStats(stats);
+
+            // 更新页面显示
+            document.getElementById('totalVisits').textContent = stats.totalVisits;
+            document.getElementById('uniqueVisitors').textContent = stats.uniqueVisitors;
+            document.getElementById('todayVisits').textContent = stats.todayVisits;
+            document.getElementById('footerVisitCount').textContent = stats.totalVisits;
+
+            return stats;
         }
 
         // 页面加载完成后执行
@@ -882,6 +1000,12 @@
 
             // 更新链接计数
             updateLinkCount(websites);
+
+            // 更新访问统计
+            updateVisitStats();
+
+            // 设置当前年份
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
         });
 
         // 渲染网站列表
@@ -899,14 +1023,17 @@
                 `;
                 return;
             }
-            <!-- 分类导航 -->
+
             websitesToRender.forEach(website => {
                 const categoryMap = {
-                    'ac': 'AI自媒体陪跑营',
+                    'ac': 'AI陪跑营',
                     'AI': '国产AI',
                     'openai': '国外AI',
                     'aitools': 'AI工具箱',
-                    'money': '理财网站',
+                    'gwwz': '国外网站',
+                    'api': 'API接口',
+                    'tools': '实用工具',
+                    'money': '理财投资',
                     'other': '其他'
                 };
 
@@ -917,7 +1044,7 @@
                 card.innerHTML = `
                     <div class="card-header">
                         <div class="favicon">
-                            <i class="fas fa-globe"></i>
+                            <i class="fas fa-robot"></i>
                         </div>
                         <h3 class="card-title">${website.title}</h3>
                         <span class="category-tag">${categoryText}</span>
@@ -955,9 +1082,11 @@
             });
         }
 
-        // 更新链接总数
+        // 更新链接计数
         function updateLinkCount(websites) {
-            document.getElementById('totalLinks').textContent = websites.length;
+            const totalLinks = websites.length;
+            document.getElementById('totalLinks').textContent = totalLinks;
+            document.getElementById('footerTotalLinks').textContent = totalLinks;
         }
 
         // 添加新链接
@@ -1018,7 +1147,7 @@
             // 重置表单
             document.getElementById('linkTitle').value = '';
             document.getElementById('linkUrl').value = '';
-            document.getElementById('linkCategory').value = 'search';
+            document.getElementById('linkCategory').value = 'ac';
             document.getElementById('linkDesc').value = '';
 
             // 显示成功提示
