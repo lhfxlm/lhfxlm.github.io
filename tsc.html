@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO-STAR框架提示词映射</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .mapping-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .prompt-section {
+            position: relative;
+        }
+
+        .prompt-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .prompt-content {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 0.7rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            max-height: 700px;
+            overflow-y: auto;
+            border-left: 4px solid #4ecdc4;
+            position: relative;
+        }
+
+        .highlight-section {
+            position: relative;
+            margin: 8px 0;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-section:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .highlight-section.context { 
+            border-left: 3px solid #ff6b6b; 
+            padding-left: 8px;
+            background: rgba(255, 107, 107, 0.1);
+        }
+        .highlight-section.objective { 
+            border-left: 3px solid #4ecdc4; 
+            padding-left: 8px;
+            background: rgba(78, 205, 196, 0.1);
+        }
+        .highlight-section.style { 
+            border-left: 3px solid #45b7d1; 
+            padding-left: 8px;
+            background: rgba(69, 183, 209, 0.1);
+        }
+        .highlight-section.tone { 
+            border-left: 3px solid #96ceb4; 
+            padding-left: 8px;
+            background: rgba(150, 206, 180, 0.1);
+        }
+        .highlight-section.audience { 
+            border-left: 3px solid #feca57; 
+            padding-left: 8px;
+            background: rgba(254, 202, 87, 0.1);
+        }
+
+        .audience-highlight {
+            background: rgba(254, 202, 87, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid rgba(254, 202, 87, 0.4);
+            cursor: pointer;
+        }
+        .highlight-section.response { 
+            border-left: 3px solid #ff9ff3; 
+            padding-left: 8px;
+            background: rgba(255, 159, 243, 0.1);
+        }
+
+        .example-box {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 0.65rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .costar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .costar-title {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .costar-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .costar-item.active {
+            opacity: 1;
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .costar-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .costar-item:nth-child(2) { --accent-color: #ff6b6b; }
+        .costar-item:nth-child(3) { --accent-color: #4ecdc4; }
+        .costar-item:nth-child(4) { --accent-color: #45b7d1; }
+        .costar-item:nth-child(5) { --accent-color: #96ceb4; }
+        .costar-item:nth-child(6) { --accent-color: #feca57; }
+        .costar-item:nth-child(7) { --accent-color: #ff9ff3; }
+
+        .costar-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .letter-badge {
+            width: 35px;
+            height: 35px;
+            background: var(--accent-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .costar-label {
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .costar-content {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .prompt-content {
+                max-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mapping-container">
+        <div class="header">
+            <h1>CO-STAR框架提示词映射分析</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="prompt-section">
+                <div class="prompt-title">完整提示词</div>
+                <div class="prompt-content">
+                    <div class="highlight-section context" data-target="context">
+                        <strong>你是一名内容创作者，擅长撰写有趣且实用的网站或软件推荐系列文案。</strong>
+                    </div>
+                    
+                    <div class="highlight-section objective audience" data-target="objective">
+                        接下来我会提供一个软件或网站的详细资料介绍，请你在创作过程中，<span class="audience-highlight" data-target="audience">根据普通用户群体（例如职场上班族、学生党等）最关注的痛点和需求</span>，从提供的资料中精心挑选最能打动这些大众群体的几个亮点，进行精简、有针对性的突出描写，确保短文案有吸引力、有爆点。
+                    </div>
+
+                    <div class="highlight-section response" data-target="response">
+                        以下是内容创作的结构和风格要求，并提供了3个 few-shot learning 示例作为参考：
+                    </div>
+
+                    <div class="example-box">
+                        <strong>【示例一】</strong>每天认识一个变态网站，第12期<br>
+                        今天要分享的是：iFixit<br>
+                        这是一个专门免费教你维修各种电子设备的网站。平时你的手机电池老化了、屏幕摔碎了，或者耳机突然没声音了都不用再花钱去修，直接上这个网站，轻松省下一大笔维修费！比如我的iPhone电池不耐用了，打开这个网站，只需要选择对应的设备品牌和型号，就能看到非常详细的图文教程，螺丝位置、拆卸顺序全都标注的一清二楚。除了手机之外，像是游戏机故障、电脑升级内存，甚至家里的家用电器坏了，这里也全都有详细的图文教程，哪怕完全是新手小白，也不用担心搞不定，赶紧去试试吧！网站我已经打包放工具箱了，关注我，每天带你解锁3个有意思的网站。<br>
+                        iFixit：https://zh.ifixit.com/
+                    </div>
+
+                    <div class="example-box">
+                        <strong>【示例二】</strong>每天认识一个变态网站，第15期。<br>
+                        今天要分享的是：PDF24<br>
+                        这是一个强大到变态的在线PDF处理工具！无论是合并PDF、拆分PDF、压缩文件、格式转换，还是加密解密，你能想到的所有PDF处理需求，它都可以免费一键搞定！平时需要花钱才能解锁的各种高级功能，在PDF24这里统统免费使用！而且完全不需要注册，打开网页就能用，简单方便！PDF24还提供了桌面版本，下载安装后就算离线也能随时处理文件，效率直接起飞！赶紧去试试吧！网站我已经打包放工具箱了，关注我，每天带你解锁3个有意思的网站。<br>
+                        PDF24：https://www.pdf24.org/zh
+                    </div>
+
+                    <div class="example-box">
+                        <strong>【示例三】</strong>每天认识一个变态网站，第18期。<br>
+                        今天要分享的是：AixDownloader<br>
+                        这是一个可以从任何网页一键下载各种资源的网站。不管你是想要图片、视频、音频，还是各种文档，只需要把这个插件简单安装到浏览器，它就能自动帮你嗅探和下载网页里的所有资源。不管你打开的是哪个平台，也不用管网站需不需要单独收费，这个插件可以全部无视，点击这里下载按钮就可以直接免费下载。比如从B站、某音、Facebook等各大视频网站一键提取高清视频，还可以直接从网易云音乐、酷我、喜马拉雅等平台一键获取音频文件；甚至连网页里的PDF、Word文档，它也能帮你一键保存到本地！非常好用，赶紧去试试吧！网站我已经打包放工具箱了，关注我，每天带你解锁3个有意思的网站。<br>
+                        https://aixdownloader.com/zh
+                    </div>
+
+                    <div class="highlight-section response" data-target="response">
+                        <strong>【以下为具体创作要求】</strong><br>
+                        1. 标题（统一格式，明确期数和吸引人的关键词）<br>
+                        示例：每天认识一个变态网站，第XX期。<br><br>
+                        2. 引入段落（激发读者好奇心）<br>
+                        固定短句：今天要分享的是：<br><br>
+                        3. 网站或软件名与核心价值（精准表达核心卖点，针对普通用户需求突出网站或软件的主要价值）<br>
+                        示例：[网站或软件名称]<br>
+                        一句话精准总结对大众普通用户群体最具吸引力的核心价值（开头为"这是一个……"），不要用指代太宽泛的词语，一定要精准总结。（不要在这里直接提及针对哪些用户群体，要通过核心价值让读者自己去感受这个工具能够精准命中自己的需求和痛点）<br><br>
+                        4. 功能介绍与使用场景（精选最实用的功能和最能戳中普通用户痛点的使用场景）<br>
+                        - 精准介绍1-2个最打动普通用户的功能，清晰明确地突出"一键操作"、"简单方便"、"无需注册"等易用特性（如适用）。<br>
+                        - 可以适当强调适合新手小白使用，降低使用门槛。<br><br>
+                        5. 额外优势与亮点（精准提炼突出特色或差异化优势）<br>
+                        - 从提供的资料中挑选1-2个对普通用户而言明显且独特的亮点，不求全面，但求突出。<br>
+                        - 具体举例展示这些亮点的实际应用或优势。<br><br>
+                        6. 行动引导CTA（刺激用户立即尝试）<br>
+                        示例：赶紧去试试吧！网站或软件我已经打包放工具箱了，关注我，每天带你解锁3个有意思的网站或软件。<br><br>
+                        7. 网站或软件链接与使用提示（必要时附加提示，降低使用难度）<br>
+                        示例：[网站或软件名称]：[网址链接或下载链接]<br>
+                        （可选提示，如需要梯子、插件或特定浏览器使用）
+                    </div>
+
+                    <div class="highlight-section style" data-target="style">
+                        请使用<strong>朴实自然、生活化、口语化语言风格</strong>，不要使用过于浮夸的词汇和疑问句，强调精准、有趣和实用，激发读者的好奇心和行动力。
+                    </div>
+
+                    <div class="highlight-section tone" data-target="tone">
+                        <strong>注意！语句逻辑一定要通顺，上下句之间过渡要自然！</strong>
+                    </div>
+
+                    <div class="highlight-section response" data-target="response">
+                        <strong>务必以一整段完整文案的格式输出，不要分成几个列点输出，不然会显得文案很割裂。</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="costar-section">
+                <div class="costar-title">CO-STAR框架拆解</div>
+                
+                <div class="costar-item" id="context">
+                    <div class="costar-header">
+                        <div class="letter-badge">C</div>
+                        <div class="costar-label">Context - 上下文</div>
+                    </div>
+                    <div class="costar-content">
+                        角色设定：内容创作者，擅长撰写有趣且实用的网站/软件推荐系列文案
+                    </div>
+                </div>
+
+                <div class="costar-item" id="objective">
+                    <div class="costar-header">
+                        <div class="letter-badge">O</div>
+                        <div class="costar-label">Objective - 目标</div>
+                    </div>
+                    <div class="costar-content">
+                        从资料中挑选最打动大众群体的亮点，进行精简、有针对性的突出描写，确保短文案有吸引力、有爆点
+                    </div>
+                </div>
+
+                <div class="costar-item" id="style">
+                    <div class="costar-header">
+                        <div class="letter-badge">S</div>
+                        <div class="costar-label">Style - 风格</div>
+                    </div>
+                    <div class="costar-content">
+                        朴实自然、生活化、口语化语言，不浮夸，强调精准、有趣和实用
+                    </div>
+                </div>
+
+                <div class="costar-item" id="tone">
+                    <div class="costar-header">
+                        <div class="letter-badge">T</div>
+                        <div class="costar-label">Tone - 语调</div>
+                    </div>
+                    <div class="costar-content">
+                        激发读者好奇心和行动力，语句逻辑通顺，过渡自然
+                    </div>
+                </div>
+
+                <div class="costar-item" id="audience">
+                    <div class="costar-header">
+                        <div class="letter-badge">A</div>
+                        <div class="costar-label">Audience - 受众</div>
+                    </div>
+                    <div class="costar-content">
+                        普通用户群体：职场上班族、学生党等，关注痛点和需求
+                    </div>
+                </div>
+
+                <div class="costar-item" id="response">
+                    <div class="costar-header">
+                        <div class="letter-badge">R</div>
+                        <div class="costar-label">Response - 响应格式</div>
+                    </div>
+                    <div class="costar-content">
+                        完整文案格式，包含7个固定结构部分：标题、引入、核心价值、功能介绍、额外优势、行动引导CTA、链接提示
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const highlightSections = document.querySelectorAll('.highlight-section');
+            const costarItems = document.querySelectorAll('.costar-item');
+
+            highlightSections.forEach(section => {
+                section.addEventListener('mouseenter', function() {
+                    const target = this.getAttribute('data-target');
+                    const targetItem = document.getElementById(target);
+                    
+                    // 重置所有项目
+                    costarItems.forEach(item => item.classList.remove('active'));
+                    
+                    // 激活对应项目
+                    if (targetItem) {
+                        targetItem.classList.add('active');
+                    }
+                });
+
+                section.addEventListener('mouseleave', function() {
+                    costarItems.forEach(item => item.classList.remove('active'));
+                });
+            });
+
+            // 为audience-highlight添加特殊处理
+            const audienceHighlight = document.querySelector('.audience-highlight');
+            if (audienceHighlight) {
+                audienceHighlight.addEventListener('mouseenter', function() {
+                    const targetItem = document.getElementById('audience');
+                    costarItems.forEach(item => item.classList.remove('active'));
+                    if (targetItem) {
+                        targetItem.classList.add('active');
+                    }
+                });
+
+                audienceHighlight.addEventListener('mouseleave', function() {
+                    costarItems.forEach(item => item.classList.remove('active'));
+                });
+            }
+
+            // 为costar项目添加反向高亮
+            costarItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const id = this.id;
+                    const correspondingSections = document.querySelectorAll(`[data-target="${id}"]`);
+                    
+                    correspondingSections.forEach(section => {
+                        section.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                    });
+                    this.classList.add('active');
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    const id = this.id;
+                    const correspondingSections = document.querySelectorAll(`[data-target="${id}"]`);
+                    
+                    correspondingSections.forEach(section => {
+                        section.style.backgroundColor = '';
+                    });
+                    this.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
